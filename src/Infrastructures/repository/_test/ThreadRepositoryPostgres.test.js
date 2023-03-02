@@ -4,6 +4,7 @@ const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper');
 const AddThread = require('../../../Domains/threads/entities/AddThread');
 const AddedThread = require('../../../Domains/threads/entities/AddedThread');
 const ThreadRepositoryPostgres = require('../ThreadRepositoryPostgres');
+const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
 
 describe('ThreadRepositoryPostgres', () => {
   afterEach(async () => {
@@ -47,6 +48,29 @@ describe('ThreadRepositoryPostgres', () => {
         owner: 'user-123',
       }));
       expect(threads).toHaveLength(1);
+    });
+  });
+
+  describe('checkAvailabilityThread', () => {
+    it('should throw NotFoundError if thread not available', async () => {
+      // arrange
+      const threadRepositoryPostgres = new ThreadRepositoryPostgres(pool, {});
+      const threadId = 'xxx';
+
+      // action and assert
+      await expect(threadRepositoryPostgres.checkAvailabilityThread(threadId))
+        .rejects.toThrow(NotFoundError);
+    });
+
+    it('should not throw NotFoundError if thread available', async () => {
+      // arrange
+      const threadRepositoryPostgres = new ThreadRepositoryPostgres(pool, {});
+      await UsersTableTestHelper.addUser({ id: 'user-123', username: 'dicoding' });
+      await ThreadsTableTestHelper.addThread({ id: 'thread-123', body: 'sebuah thread', ownerId: 'user-123' });
+
+      // action and assert
+      await expect(threadRepositoryPostgres.checkAvailabilityThread('thread-123'))
+        .resolves.not.toThrow(NotFoundError);
     });
   });
 });
