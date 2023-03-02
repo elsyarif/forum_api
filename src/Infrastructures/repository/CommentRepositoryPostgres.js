@@ -1,6 +1,7 @@
 const CommentRepository = require('../../Domains/comments/CommentRepository');
 const AddedComment = require('../../Domains/comments/entities/AddedComment');
 const NotFoundError = require('../../Commons/exceptions/NotFoundError');
+const AuthorizationError = require('../../Commons/exceptions/AuthorizationError');
 
 class CommentRepositoryPostgres extends CommentRepository {
   constructor(pool, idGenerator) {
@@ -36,6 +37,41 @@ class CommentRepositoryPostgres extends CommentRepository {
     if (!result.rowCount) {
       throw new NotFoundError('komentar tidak ditemukan');
     }
+  }
+
+  async verifyCommentOwner(commentId, owner) {
+    const query = {
+      text: 'SELECT id FROM comments WHERE id = $1 AND owner = $2',
+      values: [commentId, owner],
+    };
+
+    const result = await this._pool.query(query);
+
+    if (!result.rowCount) {
+      throw new AuthorizationError('anda tidak dapat menghapus komentar orang lain!');
+    }
+  }
+
+  async deleteComment(commentId) {
+    const query = {
+      text: 'UPDATE comments SET is_deleted = $1 WHERE id = $2',
+      values: [true, commentId],
+    };
+
+    await this._pool.query(query);
+  }
+
+  async getCommentThread(threadId) {
+    const query = {
+      text: `SELECT A.id, B.username, A.date, A.content, A.is_deleted FROM comments A
+        LEFT JOIN users B ON A.owner = B.id
+        WHERE A.thread_id = $1
+        ORDER BY A.date ASC`,
+      values: [threadId],
+    };
+
+    const result = await this._pool.query(query);
+    return result.rows;
   }
 }
 
