@@ -191,7 +191,7 @@ describe('CommentRepositoryPostgres', () => {
         content: 'dicoding',
         owner: 'user-321',
         threadId: threadPayload.id,
-        date: new Date(),
+        date: '2023-03-02T14:51:45.880Z',
       };
 
       await CommentTableTestHelper.addComment(commentPayload);
