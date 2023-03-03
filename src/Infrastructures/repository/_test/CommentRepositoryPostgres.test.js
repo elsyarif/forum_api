@@ -123,7 +123,7 @@ describe('CommentRepositoryPostgres', () => {
         id: 'thread-123',
         title: 'sebuah title thread',
         body: 'sebuah body thread',
-        date: new Date(),
+        date: '2023-03-02T14:51:45.880Z',
         ownerId: 'user-123',
       });
 
@@ -180,7 +180,7 @@ describe('CommentRepositoryPostgres', () => {
         id: 'thread-123',
         title: 'sebuah title thread',
         body: 'sebuah body thread',
-        date: new Date(),
+        date: '2023-03-02 13:00',
         ownerId: 'user-123',
       };
 
@@ -191,7 +191,7 @@ describe('CommentRepositoryPostgres', () => {
         content: 'dicoding',
         owner: 'user-321',
         threadId: threadPayload.id,
-        date: '2023-03-02T14:51:45.880Z',
+        date: '2023-03-02 14:00',
       };
 
       await CommentTableTestHelper.addComment(commentPayload);
@@ -204,7 +204,7 @@ describe('CommentRepositoryPostgres', () => {
           content: 'dicoding',
           is_deleted: false,
           username: 'hidayatulloh',
-          date: commentPayload.date,
+          date: '2023-03-02 14:00',
         },
       ]);
     });
