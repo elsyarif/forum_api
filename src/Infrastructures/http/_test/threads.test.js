@@ -106,7 +106,7 @@ describe('/threads endpoint', () => {
       expect(responseJson.message).toEqual('tidak dapat membuat thread baru karena tipe data tidak sesuai');
     });
 
-    it('should response 401 when reques payload not access token', async () => {
+    it('should response 401 when request payload not access token', async () => {
       const server = await createServer(container);
 
       // action
@@ -267,6 +267,8 @@ describe('/threads endpoint', () => {
       const responseJson = JSON.parse(response.payload);
       expect(response.statusCode).toEqual(200);
       expect(responseJson.status).toEqual('success');
+      expect(responseJson.data.thread.comments).toBeDefined();
+      expect(Array.isArray(responseJson.data.thread.comments)).toBe(true);
     });
   });
 });

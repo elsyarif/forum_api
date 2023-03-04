@@ -77,7 +77,7 @@ class ReplyRepositoryPostgres extends ReplyRepository {
 
   async getReply(threadId) {
     const query = {
-      text: `SELECT A.id, A.content, A.date, C.username, A.is_deleted, A.comment_id
+      text: `SELECT A.id, A.content, A.date, C.username, A.is_deleted, A.comment_id AS "commentId"
       FROM replies A
       INNER JOIN threads B ON A.thread_id = B.id
       LEFT JOIN users C ON C.id = A.owner

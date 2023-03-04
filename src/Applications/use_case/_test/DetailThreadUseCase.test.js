@@ -1,5 +1,6 @@
 const ThreadRepository = require('../../../Domains/threads/ThreadRepository');
 const CommentRepository = require('../../../Domains/comments/CommentRepository');
+const ReplyRepository = require('../../../Domains/reply/ReplyRepository');
 const DetailThreadUseCase = require('../DetailThreadUseCase');
 
 describe('DetailThreadUseCase', () => {
@@ -35,16 +36,20 @@ describe('DetailThreadUseCase', () => {
 
     const mockThreadRepository = new ThreadRepository();
     const mockCommentRepository = new CommentRepository();
+    const mockReplyRepository = new ReplyRepository();
 
     mockThreadRepository.checkAvailabilityThread = jest.fn(() => Promise.resolve());
     mockThreadRepository.getDetailThread = jest.fn()
       .mockImplementation(() => Promise.resolve(useCaseThread));
     mockCommentRepository.getCommentThread = jest.fn()
       .mockImplementation(() => Promise.resolve(useCaseComment));
+    mockReplyRepository.getReply = jest.fn()
+      .mockImplementation(() => Promise.resolve([]));
 
     const detailThreadUseCase = new DetailThreadUseCase({
       threadRepository: mockThreadRepository,
       commentRepository: mockCommentRepository,
+      replyRepository: mockReplyRepository,
     });
 
     const expectedThread = {
