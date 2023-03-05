@@ -66,12 +66,14 @@ describe('DetailThreadUseCase', () => {
         username: 'dicoding',
         date: '2023-03-02T14:54:45.880Z',
         content: 'sebuah comment content',
+        replies: [],
       },
       {
         id: 'comment-123',
         username: 'dicoding',
         date: '2023-03-02T14:59:45.880Z',
         content: '**komentar telah dihapus**',
+        replies: [],
       },
     ];
 

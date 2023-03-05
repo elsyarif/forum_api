@@ -6,6 +6,7 @@ class DetailComment {
     this.username = payload.username;
     this.date = payload.date;
     this.content = payload.is_deleted ? '**komentar telah dihapus**' : payload.content;
+    this.replies = payload.replies;
   }
 
   _verifyPayload(payload) {
