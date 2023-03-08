@@ -34,11 +34,11 @@ class ThreadsHandler {
     const useCasePayload = {
       threadId: request.params.threadId,
     };
-    const detailThread = await detailThreadUseCase.execute(useCasePayload);
+    const { thread } = await detailThreadUseCase.execute(useCasePayload);
     return {
       status: 'success',
       data: {
-        ...detailThread,
+        thread,
       },
     };
   }
