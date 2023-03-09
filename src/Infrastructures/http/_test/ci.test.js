@@ -3,7 +3,7 @@ const createServer = require('../createServer');
 describe('when GET /', () => {
   it('should return 200 and Hello World', async () => {
     // arrange
-    const server = createServer({});
+    const server = await createServer({});
 
     // action
     const response = await server.inject({
