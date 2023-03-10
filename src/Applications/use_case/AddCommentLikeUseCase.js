@@ -17,9 +17,10 @@ class AddCommentLikeUseCase {
 
     if (!isLiked) {
       await this._commentLikesRepository.addCommentLike(addLike);
+    } else {
+      await this._commentLikesRepository
+        .deleteCommentLike(useCasePayload.commentId, useCasePayload.userId);
     }
-    return this._commentLikesRepository
-      .deleteCommentLike(useCasePayload.commentId, useCasePayload.userId);
   }
 }
 

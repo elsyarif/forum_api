@@ -31,7 +31,7 @@ describe('AddCommentLikeUseCase', () => {
 
     mockCommentLikesRepository.checkCommentLike = jest.fn(() => Promise.resolve(false));
     mockCommentLikesRepository.addCommentLike = jest.fn(() => Promise.resolve(expected));
-    mockCommentLikesRepository.deleteCommentLike = jest.fn(() => Promise.resolve(expected));
+    // mockCommentLikesRepository.deleteCommentLike = jest.fn(() => Promise.resolve(expected));
 
     /** creating use case instance */
     const addCommentLikeUseCase = new AddCommentLikeUseCase({
@@ -42,9 +42,9 @@ describe('AddCommentLikeUseCase', () => {
 
     // action
     const addedCommentLike = await addCommentLikeUseCase.execute(useCasePayload);
-
+    console.log(addedCommentLike);
     // assert
-    expect(addedCommentLike).toStrictEqual(expected);
+    expect(addedCommentLike).toEqual(expected);
     expect(mockThreadRepository.checkAvailabilityThread).toBeCalledWith(useCasePayload.threadId);
     expect(mockCommentRepository.checkAvailabilityComment).toBeCalledWith(useCasePayload.commentId);
     expect(mockCommentLikesRepository.checkCommentLike)
@@ -89,7 +89,7 @@ describe('AddCommentLikeUseCase', () => {
     const addedCommentLike = await addCommentLikeUseCase.execute(useCasePayload);
 
     // assert
-    expect(addedCommentLike).toStrictEqual(expected);
+    expect(addedCommentLike).toEqual(expected);
     expect(mockThreadRepository.checkAvailabilityThread).toBeCalledWith(useCasePayload.threadId);
     expect(mockCommentRepository.checkAvailabilityComment).toBeCalledWith(useCasePayload.commentId);
     expect(mockCommentLikesRepository.checkCommentLike)

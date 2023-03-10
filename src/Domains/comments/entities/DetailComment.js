@@ -7,6 +7,7 @@ class DetailComment {
     this.date = payload.date;
     this.content = payload.is_deleted ? '**komentar telah dihapus**' : payload.content;
     this.replies = payload.replies;
+    this.likeCount = payload.likeCount;
   }
 
   _verifyPayload(payload) {
