@@ -16,11 +16,10 @@ class AddCommentLikeUseCase {
       .checkCommentLike(useCasePayload.commentId, useCasePayload.userId);
 
     if (!isLiked) {
-      await this._commentLikesRepository.addCommentLike(addLike);
-    } else {
-      await this._commentLikesRepository
-        .deleteCommentLike(useCasePayload.commentId, useCasePayload.userId);
+      return this._commentLikesRepository.addCommentLike(addLike);
     }
+    // eslint-disable-next-line max-len
+    return this._commentLikesRepository.deleteCommentLike(useCasePayload.commentId, useCasePayload.userId);
   }
 }
 
